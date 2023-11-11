@@ -1,4 +1,4 @@
-name: economentor
+name: centsible
 description: A new Flutter project.
 
 publish_to: "none"
@@ -9,10 +9,10 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^2.4.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

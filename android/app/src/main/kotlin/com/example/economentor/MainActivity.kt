@@ -1,4 +1,4 @@
-package com.example.economentor
+package com.centsible
 
 import io.flutter.embedding.android.FlutterActivity
 
