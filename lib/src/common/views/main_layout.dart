@@ -7,6 +7,27 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Centsible')),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add_outlined),
+            label: 'Note',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add_outlined),
+            label: 'Note',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add_outlined),
+            label: 'Note',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add_outlined),
+            label: 'Note',
+          ),
+        ],
+      ),
     );
   }
 }
