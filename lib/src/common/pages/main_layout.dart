@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mymny/src/features/expense_tracker/presentation/pages/entries_list_page.dart';
-import 'package:mymny/src/features/expense_tracker/presentation/widgets/bottom_nav_items.dart';
+import 'package:mymny/src/features/transactions/presentation/pages/txns_list_page.dart';
+import 'package:mymny/src/features/transactions/presentation/widgets/bottom_nav_items.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
