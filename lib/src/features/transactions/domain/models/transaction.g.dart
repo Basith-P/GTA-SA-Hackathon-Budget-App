@@ -14,7 +14,6 @@ _$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
           ? null
           : TxnCategory.fromJson(json['category'] as Map<String, dynamic>),
       note: json['note'] as String?,
-      categoryId: json['categoryId'] as String?,
       id: json[r'$id'] as String?,
       createdAt: json[r'$createdAt'] == null
           ? null
@@ -29,5 +28,4 @@ Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
       'amount': instance.amount,
       'date': instance.date.toIso8601String(),
       'note': instance.note,
-      'categoryId': instance.categoryId,
     };

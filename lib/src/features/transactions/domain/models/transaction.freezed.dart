@@ -24,8 +24,7 @@ mixin _$Transaction {
   DateTime get date => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false)
   TxnCategory? get category => throw _privateConstructorUsedError;
-  String? get note => throw _privateConstructorUsedError;
-  String? get categoryId => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError; // String? categoryId,
   @JsonKey(name: Strings.id$, includeToJson: false)
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: Strings.createdAt$, includeToJson: false)
@@ -50,7 +49,6 @@ abstract class $TransactionCopyWith<$Res> {
       DateTime date,
       @JsonKey(includeToJson: false) TxnCategory? category,
       String? note,
-      String? categoryId,
       @JsonKey(name: Strings.id$, includeToJson: false) String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       DateTime? createdAt,
@@ -77,7 +75,6 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
     Object? date = null,
     Object? category = freezed,
     Object? note = freezed,
-    Object? categoryId = freezed,
     Object? id = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -98,10 +95,6 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
       note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
       id: freezed == id
           ? _value.id
@@ -144,7 +137,6 @@ abstract class _$$TransactionImplCopyWith<$Res>
       DateTime date,
       @JsonKey(includeToJson: false) TxnCategory? category,
       String? note,
-      String? categoryId,
       @JsonKey(name: Strings.id$, includeToJson: false) String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       DateTime? createdAt,
@@ -170,7 +162,6 @@ class __$$TransactionImplCopyWithImpl<$Res>
     Object? date = null,
     Object? category = freezed,
     Object? note = freezed,
-    Object? categoryId = freezed,
     Object? id = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -191,10 +182,6 @@ class __$$TransactionImplCopyWithImpl<$Res>
       note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
       id: freezed == id
           ? _value.id
@@ -220,7 +207,6 @@ class _$TransactionImpl implements _Transaction {
       required this.date,
       @JsonKey(includeToJson: false) this.category,
       this.note,
-      this.categoryId,
       @JsonKey(name: Strings.id$, includeToJson: false) this.id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false) this.createdAt,
       @JsonKey(name: Strings.updatedAt$, includeToJson: false) this.updatedAt});
@@ -237,8 +223,7 @@ class _$TransactionImpl implements _Transaction {
   final TxnCategory? category;
   @override
   final String? note;
-  @override
-  final String? categoryId;
+// String? categoryId,
   @override
   @JsonKey(name: Strings.id$, includeToJson: false)
   final String? id;
@@ -251,7 +236,7 @@ class _$TransactionImpl implements _Transaction {
 
   @override
   String toString() {
-    return 'Transaction(amount: $amount, date: $date, category: $category, note: $note, categoryId: $categoryId, id: $id, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Transaction(amount: $amount, date: $date, category: $category, note: $note, id: $id, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -264,8 +249,6 @@ class _$TransactionImpl implements _Transaction {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.note, note) || other.note == note) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -275,8 +258,8 @@ class _$TransactionImpl implements _Transaction {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, amount, date, category, note,
-      categoryId, id, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, amount, date, category, note, id, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -298,7 +281,6 @@ abstract class _Transaction implements Transaction {
       required final DateTime date,
       @JsonKey(includeToJson: false) final TxnCategory? category,
       final String? note,
-      final String? categoryId,
       @JsonKey(name: Strings.id$, includeToJson: false) final String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       final DateTime? createdAt,
@@ -317,9 +299,7 @@ abstract class _Transaction implements Transaction {
   TxnCategory? get category;
   @override
   String? get note;
-  @override
-  String? get categoryId;
-  @override
+  @override // String? categoryId,
   @JsonKey(name: Strings.id$, includeToJson: false)
   String? get id;
   @override

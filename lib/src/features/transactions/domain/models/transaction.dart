@@ -14,7 +14,7 @@ class Transaction with _$Transaction {
     required DateTime date,
     @JsonKey(includeToJson: false) TxnCategory? category,
     String? note,
-    String? categoryId,
+    // String? categoryId,
     @JsonKey(name: Strings.id$, includeToJson: false) String? id,
     @JsonKey(name: Strings.createdAt$, includeToJson: false)
     DateTime? createdAt,
