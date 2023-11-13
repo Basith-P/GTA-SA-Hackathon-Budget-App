@@ -1,12 +1,15 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mymny/src/utils/constants/gaps.dart';
+import 'package:mymny/src/features/auth/presentation/pages/auth_controller.dart';
 import 'package:mymny/src/utils/constants/ui_constants.dart';
+import 'package:mymny/src/utils/widgets/gaps.dart';
+import 'package:mymny/src/utils/widgets/loaders.dart';
 
 class LoginOrSignupPage extends StatefulHookConsumerWidget {
-  const LoginOrSignupPage({super.key});
+  const LoginOrSignupPage({super.key, this.isSigningUp = false});
+
+  final bool isSigningUp;
 
   static const routeName = 'login-or-signup';
   static const routePath = '/login-or-signup';
@@ -19,36 +22,46 @@ class LoginOrSignupPage extends StatefulHookConsumerWidget {
 class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
   late ValueNotifier<bool> _isPasswordVisible;
   late GlobalKey<FormState> _formKey;
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
     _isPasswordVisible = ValueNotifier(false);
     _formKey = GlobalKey<FormState>();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
-  void submit() {}
+  void submit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      ref.read(authControllerProvider.notifier).signup(
+            email: _emailController.text,
+            password: _passwordController.text,
+            name: _nameController.text,
+          );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final nameController = useTextEditingController();
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
-
-    const isLoading = false;
+    final isLoading = ref.watch(authControllerProvider);
 
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          padding: kPaddingMd,
+          padding: kPaddingSm,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Create your\nAccount',
+                '${widget.isSigningUp ? 'Create' : 'Log in to'} your\nAccount',
                 style: textTheme.displaySmall,
               ),
               gapH36,
@@ -57,23 +70,26 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: nameController,
-                      decoration: kTextFieldDecorationDark.copyWith(
-                        hintText: 'Full Name',
-                      ),
+                      controller: _nameController,
+                      decoration:
+                          kTextFieldDecorationDark.copyWith(hintText: 'Name'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Name is required' : null,
                     ),
-                    gapH16,
+                    gapH12,
                     TextFormField(
-                      controller: emailController,
+                      controller: _emailController,
                       decoration:
                           kTextFieldDecorationDark.copyWith(hintText: 'Email'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Email is required' : null,
                     ),
-                    gapH16,
+                    gapH12,
                     ValueListenableBuilder(
                       valueListenable: _isPasswordVisible,
                       builder: (_, bool isPasswordVisible, __) {
                         return TextFormField(
-                          controller: passwordController,
+                          controller: _passwordController,
                           decoration: kTextFieldDecorationDark.copyWith(
                             hintText: 'Password',
                             suffixIcon: IconButton(
@@ -102,11 +118,12 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                   ],
                 ),
               ),
-              gapH16,
+              gapH12,
               FilledButton(
-                onPressed: isLoading ? () {} : submit,
-                child: const Text('Sign Up'),
-                // child: isLoading ? loaderOnButton : const Text('Sign Up'),
+                onPressed: isLoading ? null : submit,
+                child: isLoading
+                    ? loaderOnButton
+                    : Text(widget.isSigningUp ? 'Sign Up' : 'Log in'),
               ),
             ],
           ),
@@ -118,6 +135,9 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
   @override
   void dispose() {
     _isPasswordVisible.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     _formKey.currentState?.dispose();
     super.dispose();
   }
