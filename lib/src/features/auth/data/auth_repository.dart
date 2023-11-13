@@ -19,9 +19,20 @@ class AuthRepository implements AuthRepoistoryInterface {
   final Account _account;
 
   @override
-  Future<void> login(String email, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  FutureEither<Session> login(String email, String password) async {
+    try {
+      final session = await _account.createEmailSession(
+        email: email,
+        password: password,
+      );
+      return right(session);
+    } on AppwriteException catch (e) {
+      debugPrint(e.toString());
+      return left(Failure(appwriteErrorMessage(e.type)));
+    } catch (e) {
+      debugPrint(e.toString());
+      return left(const Failure('Something went wrong'));
+    }
   }
 
   @override

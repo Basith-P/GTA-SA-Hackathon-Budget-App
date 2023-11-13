@@ -38,11 +38,18 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
 
   void submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      ref.read(authControllerProvider.notifier).signup(
-            email: _emailController.text,
-            password: _passwordController.text,
-            name: _nameController.text,
-          );
+      if (widget.isSigningUp) {
+        ref.read(authControllerProvider.notifier).signup(
+              email: _emailController.text,
+              password: _passwordController.text,
+              name: _nameController.text,
+            );
+      } else {
+        ref.read(authControllerProvider.notifier).login(
+              email: _emailController.text,
+              password: _passwordController.text,
+            );
+      }
     }
   }
 

@@ -25,6 +25,22 @@ class AuthController extends StateNotifier<bool> {
   final AuthRepository _authRepository;
   final GoRouter _router;
 
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    state = true;
+    final res = await _authRepository.login(email, password);
+    res.fold(
+      (failure) => showSnackBar(failure.message),
+      (user) {
+        debugPrint(user.toString());
+        _router.go(MainLayout.routePath);
+      },
+    );
+    state = false;
+  }
+
   Future<void> signup({
     required String email,
     required String password,
@@ -40,7 +56,7 @@ class AuthController extends StateNotifier<bool> {
       (failure) => showSnackBar(failure.message),
       (user) {
         debugPrint(user.toString());
-        _router.go(MainLayout.routePath);
+        login(email: email, password: password);
       },
     );
     state = false;
