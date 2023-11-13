@@ -1,4 +1,4 @@
-enum TxnCategoryType {
+enum TransactionType {
   income,
   expense,
   transfer,

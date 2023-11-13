@@ -20,7 +20,7 @@ class _MainLayoutState extends State<MainLayout> {
       body: IndexedStack(
         index: selectedIndex,
         children: const [
-          EntriesListPage(),
+          TxnsListPage(),
           Center(child: Text('Explore')),
           Center(child: Text('More')),
         ],

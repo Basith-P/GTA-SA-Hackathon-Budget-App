@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mymny/src/features/transactions/domain/entry_category_type.dart';
 import 'package:mymny/src/features/transactions/domain/models/txn_category.dart';
 import 'package:mymny/src/utils/constants/strings.dart';
 
@@ -14,7 +15,7 @@ class Transaction with _$Transaction {
     required DateTime date,
     @JsonKey(includeToJson: false) TxnCategory? category,
     String? note,
-    // String? categoryId,
+    required TransactionType type,
     @JsonKey(name: Strings.id$, includeToJson: false) String? id,
     @JsonKey(name: Strings.createdAt$, includeToJson: false)
     DateTime? createdAt,

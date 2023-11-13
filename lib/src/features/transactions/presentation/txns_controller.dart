@@ -13,12 +13,6 @@ final transactionsControllerProvider =
   );
 });
 
-final getTransactionsProvider = FutureProvider<List<Transaction>>((ref) async {
-  final transactions =
-      await ref.read(transactionsControllerProvider.notifier).getTransactions();
-  return transactions;
-});
-
 final getTxnCategoriesProvider = FutureProvider<List<TxnCategory>>((ref) async {
   final transactions = await ref
       .read(transactionsControllerProvider.notifier)
@@ -34,20 +28,24 @@ class TransactionsController extends StateNotifier<bool> {
 
   final TransactionsRepository _transactionsRepository;
 
+  /// [ Txn Categories ]
+
+  Future<List<TxnCategory>> getTxnCategories() async {
+    final res = await _transactionsRepository.getTxnCategories();
+    return res.fold(
+      (l) => throw Exception(l.message),
+      (r) => r,
+    );
+  }
+
+  /// [ Transaction ]
+
   Future<List<Transaction>> getTransactions() async {
     final res = await _transactionsRepository.getTransactions();
     return res.fold(
       (l) {
         throw Exception(l.message);
       },
-      (r) => r,
-    );
-  }
-
-  Future<List<TxnCategory>> getTxnCategories() async {
-    final res = await _transactionsRepository.getTxnCategories();
-    return res.fold(
-      (l) => throw Exception(l.message),
       (r) => r,
     );
   }

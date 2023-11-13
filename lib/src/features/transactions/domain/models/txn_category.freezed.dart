@@ -21,7 +21,7 @@ TxnCategory _$TxnCategoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TxnCategory {
   String get name => throw _privateConstructorUsedError;
-  TxnCategoryType get type => throw _privateConstructorUsedError;
+  TransactionType get type => throw _privateConstructorUsedError;
   @JsonKey(name: Strings.id$, includeToJson: false)
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: Strings.createdAt$, includeToJson: false)
@@ -43,7 +43,7 @@ abstract class $TxnCategoryCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      TxnCategoryType type,
+      TransactionType type,
       @JsonKey(name: Strings.id$, includeToJson: false) String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       DateTime? createdAt,
@@ -78,7 +78,7 @@ class _$TxnCategoryCopyWithImpl<$Res, $Val extends TxnCategory>
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as TxnCategoryType,
+              as TransactionType,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -105,7 +105,7 @@ abstract class _$$TxnCategoryImplCopyWith<$Res>
   @useResult
   $Res call(
       {String name,
-      TxnCategoryType type,
+      TransactionType type,
       @JsonKey(name: Strings.id$, includeToJson: false) String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       DateTime? createdAt,
@@ -138,7 +138,7 @@ class __$$TxnCategoryImplCopyWithImpl<$Res>
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as TxnCategoryType,
+              as TransactionType,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -171,7 +171,7 @@ class _$TxnCategoryImpl implements _TxnCategory {
   @override
   final String name;
   @override
-  final TxnCategoryType type;
+  final TransactionType type;
   @override
   @JsonKey(name: Strings.id$, includeToJson: false)
   final String? id;
@@ -223,7 +223,7 @@ class _$TxnCategoryImpl implements _TxnCategory {
 abstract class _TxnCategory implements TxnCategory {
   const factory _TxnCategory(
       {required final String name,
-      required final TxnCategoryType type,
+      required final TransactionType type,
       @JsonKey(name: Strings.id$, includeToJson: false) final String? id,
       @JsonKey(name: Strings.createdAt$, includeToJson: false)
       final DateTime? createdAt,
@@ -236,7 +236,7 @@ abstract class _TxnCategory implements TxnCategory {
   @override
   String get name;
   @override
-  TxnCategoryType get type;
+  TransactionType get type;
   @override
   @JsonKey(name: Strings.id$, includeToJson: false)
   String? get id;

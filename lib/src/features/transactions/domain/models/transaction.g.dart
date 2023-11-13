@@ -14,6 +14,7 @@ _$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
           ? null
           : TxnCategory.fromJson(json['category'] as Map<String, dynamic>),
       note: json['note'] as String?,
+      type: $enumDecode(_$TransactionTypeEnumMap, json['type']),
       id: json[r'$id'] as String?,
       createdAt: json[r'$createdAt'] == null
           ? null
@@ -28,4 +29,11 @@ Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
       'amount': instance.amount,
       'date': instance.date.toIso8601String(),
       'note': instance.note,
+      'type': _$TransactionTypeEnumMap[instance.type]!,
     };
+
+const _$TransactionTypeEnumMap = {
+  TransactionType.income: 'income',
+  TransactionType.expense: 'expense',
+  TransactionType.transfer: 'transfer',
+};

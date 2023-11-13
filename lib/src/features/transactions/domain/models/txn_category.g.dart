@@ -9,7 +9,7 @@ part of 'txn_category.dart';
 _$TxnCategoryImpl _$$TxnCategoryImplFromJson(Map<String, dynamic> json) =>
     _$TxnCategoryImpl(
       name: json['name'] as String,
-      type: $enumDecode(_$TxnCategoryTypeEnumMap, json['type']),
+      type: $enumDecode(_$TransactionTypeEnumMap, json['type']),
       id: json[r'$id'] as String?,
       createdAt: json[r'$createdAt'] == null
           ? null
@@ -22,11 +22,11 @@ _$TxnCategoryImpl _$$TxnCategoryImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TxnCategoryImplToJson(_$TxnCategoryImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'type': _$TxnCategoryTypeEnumMap[instance.type]!,
+      'type': _$TransactionTypeEnumMap[instance.type]!,
     };
 
-const _$TxnCategoryTypeEnumMap = {
-  TxnCategoryType.income: 'income',
-  TxnCategoryType.expense: 'expense',
-  TxnCategoryType.transfer: 'transfer',
+const _$TransactionTypeEnumMap = {
+  TransactionType.income: 'income',
+  TransactionType.expense: 'expense',
+  TransactionType.transfer: 'transfer',
 };

@@ -25,7 +25,7 @@ class NewTransactionPage extends StatefulHookConsumerWidget {
 
 class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
   final _formKey = GlobalKey<FormState>();
-  TxnCategoryType _txnCategoryType = TxnCategoryType.expense;
+  TransactionType _transactionType = TransactionType.expense;
   String? _txnCategory;
 
   @override
@@ -37,7 +37,8 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
 
     Future<void> submit() async {
       if (_formKey.currentState!.validate()) {
-        if (_txnCategory == null) {
+        if (_txnCategory == null &&
+            _transactionType != TransactionType.transfer) {
           showSnackBar('Please select a category');
           return;
         }
@@ -46,6 +47,7 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
           amount: double.parse(amountController.text),
           note: noteController.text,
           date: DateTime.now(),
+          type: _transactionType,
         );
 
         final res = await ref
@@ -57,16 +59,16 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
     }
 
     final chooseTxnType = SegmentedButton(
-      segments: TxnCategoryType.values
+      segments: TransactionType.values
           .map((e) => ButtonSegment(value: e, label: Text(e.name.capitalize)))
           .toList(),
-      selected: {_txnCategoryType},
+      selected: {_transactionType},
       showSelectedIcon: false,
       onSelectionChanged: (value) => isLoading
           ? null
           : setState(() {
               _txnCategory = null;
-              _txnCategoryType = value.first;
+              _transactionType = value.first;
             }),
     );
 
@@ -82,7 +84,7 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
                   gapH16,
                   DropdownButtonFormField(
                     items: categories
-                        .where((e) => e.type == _txnCategoryType)
+                        .where((e) => e.type == _transactionType)
                         .map(
                           (e) => DropdownMenuItem(
                             value: e.id,

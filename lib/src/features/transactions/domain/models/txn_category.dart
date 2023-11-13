@@ -11,7 +11,7 @@ part 'txn_category.g.dart';
 class TxnCategory with _$TxnCategory {
   const factory TxnCategory({
     required String name,
-    required TxnCategoryType type,
+    required TransactionType type,
     @JsonKey(name: Strings.id$, includeToJson: false) String? id,
     @JsonKey(name: Strings.createdAt$, includeToJson: false)
     DateTime? createdAt,
