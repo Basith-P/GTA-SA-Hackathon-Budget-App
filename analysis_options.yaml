@@ -3,3 +3,6 @@ linter:
   rules:
     public_member_api_docs: false
     require_trailing_commas: false
+anaylzer:
+  errors:
+    invalid_annotation_target: ignore

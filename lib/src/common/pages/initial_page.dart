@@ -5,14 +5,26 @@ import 'package:mymny/src/features/auth/presentation/auth_controller.dart';
 import 'package:mymny/src/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:mymny/src/utils/widgets/loaders.dart';
 
-class InitialPage extends ConsumerWidget {
+class InitialPage extends ConsumerStatefulWidget {
   const InitialPage({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _InitialPageState();
+}
+
+class _InitialPageState extends ConsumerState<InitialPage> {
+  late Future<bool> _future;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    _future = ref.read(authControllerProvider.notifier).getCurrentAccount();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ref.read(authControllerProvider.notifier).getCurrentAccount(),
-        builder: (_, AsyncSnapshot<bool> snapshot) {
+        future: _future,
+        builder: (_, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Scaffold(
               body: Center(child: loaderOnButton),

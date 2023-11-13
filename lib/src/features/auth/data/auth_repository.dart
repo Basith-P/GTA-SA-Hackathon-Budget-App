@@ -74,7 +74,7 @@ class AuthRepository implements AuthRepoistoryInterface {
 
   @override
   Future<void> logout() {
-    // TODO: implement logout
+    // TODO(basith): implement logout
     throw UnimplementedError();
   }
 }
