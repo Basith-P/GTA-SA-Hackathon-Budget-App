@@ -73,7 +73,7 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
                     return ListTile(
                       title: Text(transaction.note ?? 'No note'),
                       subtitle: Text(transaction.amount.toString()),
-                      trailing: Text(transaction.category!.name),
+                      trailing: Text(transaction.category?.name ?? ''),
                     );
                   },
                 ),

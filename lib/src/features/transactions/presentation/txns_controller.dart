@@ -51,10 +51,10 @@ class TransactionsController extends StateNotifier<bool> {
   }
 
   Future<bool> addTransaction(
-      Transaction transaction, String txnCategoryId) async {
+      Transaction transaction, String? txnCategoryId) async {
     state = true;
     final data = transaction.toJson();
-    data[Strings.category] = txnCategoryId;
+    if (txnCategoryId != null) data[Strings.category] = txnCategoryId;
     final res = await _transactionsRepository.addTransaction(data);
     state = false;
     res.fold(

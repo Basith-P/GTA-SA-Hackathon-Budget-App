@@ -52,7 +52,7 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
 
         final res = await ref
             .read(transactionsControllerProvider.notifier)
-            .addTransaction(txn, _txnCategory!);
+            .addTransaction(txn, _txnCategory);
 
         if (res) ref.read(goRouterProvider).pop();
       }
