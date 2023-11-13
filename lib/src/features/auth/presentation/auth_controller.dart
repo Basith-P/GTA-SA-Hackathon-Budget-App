@@ -25,6 +25,17 @@ class AuthController extends StateNotifier<bool> {
   final AuthRepository _authRepository;
   final GoRouter _router;
 
+  Future<bool> getCurrentAccount() async {
+    final res = await _authRepository.getCurrentAccount();
+    res.fold(
+      (failure) => showSnackBar(failure.message),
+      (user) {
+        debugPrint(user.toString());
+      },
+    );
+    return res.isRight();
+  }
+
   Future<void> login({
     required String email,
     required String password,
