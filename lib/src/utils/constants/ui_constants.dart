@@ -46,6 +46,10 @@ const kTextFieldDecorationDark = InputDecoration(
     borderSide: BorderSide.none,
     // borderSide: BorderSide(color: AppColors.primary, width: 2),
   ),
+  disabledBorder: OutlineInputBorder(
+    borderRadius: kBorderRadiusSm,
+    borderSide: BorderSide.none,
+  ),
   filled: true,
   // fillColor: AppColors.dark,
 );

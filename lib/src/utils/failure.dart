@@ -1,5 +1,5 @@
-class Failure {
-  const Failure(this.message, [this.st]);
+class Failure extends Error {
+  Failure(this.message, [this.st]);
 
   final String message;
   final StackTrace? st;

@@ -10,15 +10,18 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      // debugShowMaterialGrid: true,
-      theme: AppTheme.theme(),
-      darkTheme: AppTheme.theme(isDark: true),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      routerConfig: ref.read(goRouterProvider),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        // debugShowMaterialGrid: true,
+        theme: AppTheme.theme(),
+        darkTheme: AppTheme.theme(isDark: true),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        routerConfig: ref.read(goRouterProvider),
+      ),
     );
   }
 }

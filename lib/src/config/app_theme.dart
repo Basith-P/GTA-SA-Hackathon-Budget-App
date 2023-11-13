@@ -11,5 +11,13 @@ class AppTheme {
             visualDensity: VisualDensity.comfortable,
           ),
         ),
+        segmentedButtonTheme: SegmentedButtonThemeData(
+          style: ButtonStyle(
+            visualDensity: VisualDensity.comfortable,
+            shape: MaterialStateProperty.all(
+              const RoundedRectangleBorder(borderRadius: kBorderRadiusSm),
+            ),
+          ),
+        ),
       );
 }
