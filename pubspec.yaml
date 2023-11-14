@@ -19,7 +19,7 @@ dependencies:
   go_router: ^12.1.1
   hooks_riverpod: ^2.4.5
   infinite_grouped_list: ^1.2.1
-  intl: ^0.18.0
+  intl: ^0.18.1
   json_annotation: ^4.8.1
 
 dev_dependencies:

@@ -5,8 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mymny/src/features/transactions/domain/models/transaction.dart';
 import 'package:mymny/src/features/transactions/presentation/pages/new_transaction_page.dart';
 import 'package:mymny/src/features/transactions/presentation/txns_controller.dart';
+import 'package:mymny/src/features/transactions/presentation/util_functions.dart';
+import 'package:mymny/src/features/transactions/presentation/widgets/txn_group_card.dart';
 import 'package:mymny/src/providers.dart';
 import 'package:mymny/src/utils/constants/appwrite_constants.dart';
+import 'package:mymny/src/utils/constants/ui_constants.dart';
 import 'package:mymny/src/utils/widgets/loaders.dart';
 
 class TxnsListPage extends ConsumerStatefulWidget {
@@ -20,17 +23,20 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
   late RealtimeSubscription _subscription;
 
   List<Transaction> transactions = [];
+  Map<String, List<Transaction>> groupedTxns = {};
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    ref
-        .read(transactionsControllerProvider.notifier)
+    final txnsControllerNotifier =
+        ref.read(transactionsControllerProvider.notifier);
+    txnsControllerNotifier
         .getTransactions(userId: ref.read(currentUserProvider)!.$id)
-        .then((value) {
+        .then((txns) {
       setState(() {
-        transactions = value;
+        transactions = txns;
+        groupedTxns = groupTransactionsByDate(txns);
         isLoading = false;
       });
     });
@@ -45,15 +51,16 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
 
       const eventBase = 'databases.*.collections.*.documents.*';
       if (response.events.contains('$eventBase.create')) {
-        setState(() => transactions.insert(0, txn));
+        transactions.insert(0, txn);
       } else if (response.events.contains('$eventBase.delete')) {
-        setState(() => transactions.remove(txn));
+        transactions.remove(txn);
       } else if (response.events.contains('$eventBase.update')) {
-        setState(() {
-          final index = transactions.indexWhere((t) => t.id == txn.id);
-          transactions[index] = txn;
-        });
+        final index = transactions.indexWhere((t) => t.id == txn.id);
+        transactions[index] = txn;
       }
+      setState(() {
+        groupedTxns = groupTransactionsByDate(transactions);
+      });
     });
   }
 
@@ -66,14 +73,12 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
           : transactions.isEmpty
               ? const Center(child: Text('No transactions'))
               : ListView.builder(
-                  itemCount: transactions.length,
+                  padding: kPaddingXs,
+                  itemCount: groupedTxns.length,
                   itemBuilder: (context, index) {
-                    final transaction = transactions[index];
-                    return ListTile(
-                      title: Text(transaction.note ?? 'No note'),
-                      subtitle: Text(transaction.amount.toString()),
-                      trailing: Text(transaction.category?.name ?? ''),
-                    );
+                    final date = groupedTxns.keys.elementAt(index);
+                    final txns = groupedTxns[date]!;
+                    return TxnGroupCard(date: date, txns: txns);
                   },
                 ),
       floatingActionButton: FloatingActionButton(

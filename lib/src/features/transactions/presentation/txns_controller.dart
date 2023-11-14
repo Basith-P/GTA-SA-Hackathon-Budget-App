@@ -63,4 +63,6 @@ class TransactionsController extends StateNotifier<bool> {
     );
     return res.isRight();
   }
+
+  // Local
 }
