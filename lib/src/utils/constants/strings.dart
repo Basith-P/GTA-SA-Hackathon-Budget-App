@@ -5,6 +5,7 @@ class Strings {
 
   static const userId = 'userId';
   static const category = 'category';
+  static const date = 'date';
 
   static const current = 'current';
 }

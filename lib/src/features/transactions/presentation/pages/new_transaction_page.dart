@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:mymny/src/common/pages/main_layout.dart';
 import 'package:mymny/src/config/go_router.dart';
 import 'package:mymny/src/features/transactions/domain/entry_category_type.dart';
@@ -28,6 +29,13 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
   final _formKey = GlobalKey<FormState>();
   TransactionType _transactionType = TransactionType.expense;
   String? _txnCategory;
+  late ValueNotifier<DateTime> _date;
+
+  @override
+  void initState() {
+    super.initState();
+    _date = ValueNotifier(DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,7 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
         final txn = Transaction(
           amount: double.parse(amountController.text),
           note: noteController.text,
-          date: DateTime.now(),
+          date: _date.value,
           type: _transactionType,
           userId: ref.read(currentUserProvider)!.$id,
         );
@@ -75,6 +83,8 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
     );
 
     return Scaffold(
+      // appBar: AppBar(
+      // title: Text(DateFormat('dd MMM yy - h:mm a').format(DateTime.now()))),
       appBar: AppBar(title: const Text('New Transaction')),
       body: ref.watch(getTxnCategoriesProvider).when(
             data: (categories) => Form(
@@ -84,6 +94,28 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
                 children: [
                   chooseTxnType,
                   gapH16,
+                  ValueListenableBuilder(
+                      valueListenable: _date,
+                      builder: (_, value, __) {
+                        return TextFormField(
+                          enabled: !isLoading,
+                          readOnly: true,
+                          initialValue:
+                              DateFormat('dd MMM yy - h:mm a').format(value),
+                          decoration: kTextFieldDecorationDark,
+                          onTap: () async {
+                            final date = await showDatePicker(
+                              context: context,
+                              initialDate: value,
+                              firstDate: DateTime(2015),
+                              lastDate: DateTime(2050),
+                            );
+
+                            if (date != null) _date.value = date;
+                          },
+                        );
+                      }),
+                  gapH12,
                   DropdownButtonFormField(
                     items: categories
                         .where((e) => e.type == _transactionType)
@@ -138,5 +170,11 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
         child: isLoading ? loaderOnButton : const Icon(Icons.done_rounded),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _date.dispose();
+    super.dispose();
   }
 }

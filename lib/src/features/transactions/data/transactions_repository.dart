@@ -30,6 +30,7 @@ class TransactionsRepository implements TransactionsRepositoryInterface {
           collectionId: AppwriteConstants.transactions,
           queries: [
             if (userId != null) Query.equal(Strings.userId, userId),
+            Query.orderDesc(Strings.date),
           ]);
       return right(
           res.documents.map((e) => Transaction.fromJson(e.data)).toList());
