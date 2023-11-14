@@ -3,5 +3,8 @@ class Strings {
   static const updatedAt$ = r'$updatedAt';
   static const createdAt$ = r'$createdAt';
 
+  static const userId = 'userId';
   static const category = 'category';
+
+  static const current = 'current';
 }

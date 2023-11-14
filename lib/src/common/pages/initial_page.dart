@@ -7,12 +7,15 @@ import 'package:mymny/src/utils/widgets/loaders.dart';
 
 class InitialPage extends ConsumerStatefulWidget {
   const InitialPage({super.key});
+
+  static const routePath = '/initial';
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InitialPageState();
 }
 
 class _InitialPageState extends ConsumerState<InitialPage> {
-  late Future<bool> _future;
+  late Future<bool?> _future;
 
   @override
   void initState() {
@@ -39,8 +42,10 @@ class _InitialPageState extends ConsumerState<InitialPage> {
               body: Center(child: Text('Something went wrong')),
             );
           }
+          debugPrint('snapshot.data: ${snapshot.data}');
 
           if (snapshot.hasData && (snapshot.data ?? false)) {
+            // ref.read(currentUserProvider.notifier).state = snapshot.data;
             return const MainLayout();
           } else {
             return const LoginOrSignupPage();

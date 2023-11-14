@@ -8,6 +8,7 @@ import 'package:mymny/src/features/transactions/domain/transactions_repository_i
 import 'package:mymny/src/providers.dart';
 import 'package:mymny/src/utils/appwrite_error_messages.dart';
 import 'package:mymny/src/utils/constants/appwrite_constants.dart';
+import 'package:mymny/src/utils/constants/strings.dart';
 import 'package:mymny/src/utils/failure.dart';
 import 'package:mymny/src/utils/typedefs.dart';
 
@@ -22,12 +23,14 @@ class TransactionsRepository implements TransactionsRepositoryInterface {
   final Databases _databases;
 
   @override
-  FutureEither<List<Transaction>> getTransactions() async {
+  FutureEither<List<Transaction>> getTransactions({String? userId}) async {
     try {
       final res = await _databases.listDocuments(
-        databaseId: AppwriteConstants.databaseId,
-        collectionId: AppwriteConstants.transactions,
-      );
+          databaseId: AppwriteConstants.databaseId,
+          collectionId: AppwriteConstants.transactions,
+          queries: [
+            if (userId != null) Query.equal(Strings.userId, userId),
+          ]);
       return right(
           res.documents.map((e) => Transaction.fromJson(e.data)).toList());
     } on AppwriteException catch (e) {

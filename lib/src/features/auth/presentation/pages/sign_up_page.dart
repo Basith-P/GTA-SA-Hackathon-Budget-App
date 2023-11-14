@@ -26,6 +26,8 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
+  bool _isSigningUp = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,11 +36,12 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _isSigningUp = widget.isSigningUp;
   }
 
   void submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      if (widget.isSigningUp) {
+      if (_isSigningUp) {
         ref.read(authControllerProvider.notifier).signup(
               email: _emailController.text,
               password: _passwordController.text,
@@ -68,7 +71,7 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${widget.isSigningUp ? 'Create' : 'Log in to'} your\nAccount',
+                '${_isSigningUp ? 'Create' : 'Log in to'} your\nAccount',
                 style: textTheme.displaySmall,
               ),
               gapH36,
@@ -76,14 +79,16 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration:
-                          kTextFieldDecorationDark.copyWith(hintText: 'Name'),
-                      validator: (val) =>
-                          val!.isEmpty ? 'Name is required' : null,
-                    ),
-                    gapH12,
+                    if (_isSigningUp) ...[
+                      TextFormField(
+                        controller: _nameController,
+                        decoration:
+                            kTextFieldDecorationDark.copyWith(hintText: 'Name'),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Name is required' : null,
+                      ),
+                      gapH12,
+                    ],
                     TextFormField(
                       controller: _emailController,
                       decoration:
@@ -130,8 +135,31 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                 onPressed: isLoading ? null : submit,
                 child: isLoading
                     ? loaderOnButton
-                    : Text(widget.isSigningUp ? 'Sign Up' : 'Log in'),
+                    : Text(_isSigningUp ? 'Sign Up' : 'Log in'),
               ),
+              gapH40,
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    '${_isSigningUp ? 'Already' : "Don't"} have an account?',
+                    style: textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  gapW4,
+                  TextButton(
+                    onPressed: () =>
+                        setState(() => _isSigningUp = !_isSigningUp),
+                    child: Text(
+                      _isSigningUp ? 'Log in' : 'Sign up',
+                      style: textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

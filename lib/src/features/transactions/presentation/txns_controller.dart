@@ -40,8 +40,8 @@ class TransactionsController extends StateNotifier<bool> {
 
   /// [ Transaction ]
 
-  Future<List<Transaction>> getTransactions() async {
-    final res = await _transactionsRepository.getTransactions();
+  Future<List<Transaction>> getTransactions({String? userId}) async {
+    final res = await _transactionsRepository.getTransactions(userId: userId);
     return res.fold(
       (l) {
         throw Exception(l.message);

@@ -13,9 +13,10 @@ class Transaction with _$Transaction {
   const factory Transaction({
     required double amount,
     required DateTime date,
+    required TransactionType type,
+    required String userId,
     @JsonKey(includeToJson: false) TxnCategory? category,
     String? note,
-    required TransactionType type,
     @JsonKey(name: Strings.id$, includeToJson: false) String? id,
     @JsonKey(name: Strings.createdAt$, includeToJson: false)
     DateTime? createdAt,

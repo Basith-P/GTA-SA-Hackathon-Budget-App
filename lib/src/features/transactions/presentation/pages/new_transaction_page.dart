@@ -6,6 +6,7 @@ import 'package:mymny/src/config/go_router.dart';
 import 'package:mymny/src/features/transactions/domain/entry_category_type.dart';
 import 'package:mymny/src/features/transactions/domain/models/transaction.dart';
 import 'package:mymny/src/features/transactions/presentation/txns_controller.dart';
+import 'package:mymny/src/providers.dart';
 import 'package:mymny/src/utils/constants/ui_constants.dart';
 import 'package:mymny/src/utils/extensions.dart';
 import 'package:mymny/src/utils/functions.dart';
@@ -48,6 +49,7 @@ class _NewTransactionPageState extends ConsumerState<NewTransactionPage> {
           note: noteController.text,
           date: DateTime.now(),
           type: _transactionType,
+          userId: ref.read(currentUserProvider)!.$id,
         );
 
         final res = await ref

@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mymny/src/features/auth/presentation/auth_controller.dart';
 import 'package:mymny/src/features/transactions/domain/models/transaction.dart';
 import 'package:mymny/src/features/transactions/presentation/pages/new_transaction_page.dart';
 import 'package:mymny/src/features/transactions/presentation/txns_controller.dart';
@@ -27,7 +28,7 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
     super.initState();
     ref
         .read(transactionsControllerProvider.notifier)
-        .getTransactions()
+        .getTransactions(userId: ref.read(currentUserProvider)!.$id)
         .then((value) {
       setState(() {
         transactions = value;
@@ -40,16 +41,15 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
       'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.transactions}.documents'
     ]);
     _subscription.stream.listen((response) {
+      final txn = Transaction.fromJson(response.payload);
+      if (txn.userId != ref.read(currentUserProvider)!.$id) return;
+
       const eventBase = 'databases.*.collections.*.documents.*';
-      debugPrint('EVENTS: ${response.events}');
       if (response.events.contains('$eventBase.create')) {
-        final txn = Transaction.fromJson(response.payload);
         setState(() => transactions.insert(0, txn));
       } else if (response.events.contains('$eventBase.delete')) {
-        final txn = Transaction.fromJson(response.payload);
         setState(() => transactions.remove(txn));
       } else if (response.events.contains('$eventBase.update')) {
-        final txn = Transaction.fromJson(response.payload);
         setState(() {
           final index = transactions.indexWhere((t) => t.id == txn.id);
           transactions[index] = txn;
@@ -61,7 +61,15 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Transactions')),
+      appBar: AppBar(
+        title: const Text('Transactions'),
+        actions: [
+          IconButton(
+            onPressed: () => ref.read(authControllerProvider.notifier).logout(),
+            icon: const Icon(Icons.logout_rounded),
+          ),
+        ],
+      ),
       body: isLoading
           ? loaderOnButton
           : transactions.isEmpty

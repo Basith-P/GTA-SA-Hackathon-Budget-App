@@ -14,6 +14,10 @@ final _router = GoRouter(
       builder: (_, __) => const InitialPage(),
     ),
     GoRoute(
+      path: InitialPage.routePath,
+      builder: (_, __) => const InitialPage(),
+    ),
+    GoRoute(
       path: LoginOrSignupPage.routePath,
       builder: (_, __) => const LoginOrSignupPage(),
     ),
