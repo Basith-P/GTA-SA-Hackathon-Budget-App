@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mymny/src/common/pages/more_options_page.dart';
 import 'package:mymny/src/features/transactions/presentation/pages/txns_list_page.dart';
 import 'package:mymny/src/features/transactions/presentation/widgets/bottom_nav_items.dart';
 import 'package:mymny/src/utils/widgets/loaders.dart';
@@ -41,7 +42,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
                 TxnsListPage(),
                 Center(child: Text('Stats')),
                 Center(child: Text('Explore')),
-                Center(child: Text('More')),
+                MoreOptionsPage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

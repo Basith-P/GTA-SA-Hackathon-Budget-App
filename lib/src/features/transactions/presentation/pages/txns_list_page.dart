@@ -2,7 +2,6 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mymny/src/features/auth/presentation/auth_controller.dart';
 import 'package:mymny/src/features/transactions/domain/models/transaction.dart';
 import 'package:mymny/src/features/transactions/presentation/pages/new_transaction_page.dart';
 import 'package:mymny/src/features/transactions/presentation/txns_controller.dart';
@@ -61,15 +60,7 @@ class _TxnsListPageState extends ConsumerState<TxnsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Transactions'),
-        actions: [
-          IconButton(
-            onPressed: () => ref.read(authControllerProvider.notifier).logout(),
-            icon: const Icon(Icons.logout_rounded),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('Transactions')),
       body: isLoading
           ? loaderOnButton
           : transactions.isEmpty
