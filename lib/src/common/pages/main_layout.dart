@@ -41,7 +41,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
               index: selectedIndex,
               children: const [
                 TxnsListPage(),
-                Center(child: Text('Stats')),
+                // Center(child: Text('Stats')),
                 ExplorePage(),
                 MoreOptionsPage(),
               ],

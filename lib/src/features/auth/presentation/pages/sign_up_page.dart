@@ -81,16 +81,20 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                   children: [
                     if (_isSigningUp) ...[
                       TextFormField(
+                        key: const ValueKey('name'),
                         controller: _nameController,
                         decoration:
                             kTextFieldDecorationDark.copyWith(hintText: 'Name'),
+                        textCapitalization: TextCapitalization.words,
                         validator: (val) =>
                             val!.isEmpty ? 'Name is required' : null,
                       ),
                       gapH12,
                     ],
                     TextFormField(
+                      key: const ValueKey('email'),
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration:
                           kTextFieldDecorationDark.copyWith(hintText: 'Email'),
                       validator: (val) =>
@@ -101,6 +105,7 @@ class _LoginOrSignupPageState extends ConsumerState<LoginOrSignupPage> {
                       valueListenable: _isPasswordVisible,
                       builder: (_, bool isPasswordVisible, __) {
                         return TextFormField(
+                          key: const ValueKey('password'),
                           controller: _passwordController,
                           decoration: kTextFieldDecorationDark.copyWith(
                             hintText: 'Password',

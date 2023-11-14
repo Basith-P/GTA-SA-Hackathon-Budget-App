@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mymny/l10n/l10n.dart';
 import 'package:mymny/src/config/app_theme.dart';
 import 'package:mymny/src/config/go_router.dart';
+import 'package:mymny/src/providers.dart';
 import 'package:mymny/src/utils/global_keys.dart';
 
 class App extends ConsumerWidget {
@@ -17,6 +18,7 @@ class App extends ConsumerWidget {
         // debugShowMaterialGrid: true,
         theme: AppTheme.theme(),
         darkTheme: AppTheme.theme(isDark: true),
+        themeMode: ref.watch(themeModeProvider),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         scaffoldMessengerKey: scaffoldMessengerKey,

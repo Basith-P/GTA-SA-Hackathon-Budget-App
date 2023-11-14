@@ -46,7 +46,7 @@ class AuthRepository implements AuthRepoistoryInterface {
       return left(Failure(appwriteErrorMessage(e.type)));
     } catch (e) {
       debugPrint(e.toString());
-      return left(Failure('Something went wrong'));
+      return left(Failure('$e'));
     }
   }
 
@@ -83,7 +83,7 @@ class AuthRepository implements AuthRepoistoryInterface {
       return left(Failure(appwriteErrorMessage(e.type)));
     } catch (e) {
       debugPrint(e.toString());
-      return left(Failure('Something went wrong'));
+      return left(Failure('$e'));
     }
   }
 }
