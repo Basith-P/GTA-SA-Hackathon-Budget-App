@@ -5,6 +5,9 @@ class AppTheme {
   static ThemeData theme({bool isDark = false}) => ThemeData(
         useMaterial3: true,
         brightness: isDark ? Brightness.dark : Brightness.light,
+        appBarTheme: const AppBarTheme(
+          scrolledUnderElevation: 0,
+        ),
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             shape: const RoundedRectangleBorder(borderRadius: kBorderRadiusSm),

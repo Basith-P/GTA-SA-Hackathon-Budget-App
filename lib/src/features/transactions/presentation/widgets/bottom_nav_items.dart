@@ -7,11 +7,11 @@ const bottomNavItems = [
     activeIcon: Icon(FluentIcons.book_24_filled),
     label: 'Txns',
   ),
-  BottomNavigationBarItem(
-    icon: Icon(FluentIcons.data_pie_24_regular),
-    activeIcon: Icon(FluentIcons.data_pie_24_filled),
-    label: 'Stats',
-  ),
+  // BottomNavigationBarItem(
+  //   icon: Icon(FluentIcons.data_pie_24_regular),
+  //   activeIcon: Icon(FluentIcons.data_pie_24_filled),
+  //   label: 'Stats',
+  // ),
   BottomNavigationBarItem(
     icon: Icon(FluentIcons.compass_northwest_24_regular),
     activeIcon: Icon(FluentIcons.compass_northwest_24_filled),
