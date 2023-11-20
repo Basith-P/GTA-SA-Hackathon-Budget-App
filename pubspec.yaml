@@ -7,7 +7,7 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  appwrite: ^11.0.0
+  appwrite: ^11.0.1
   fluentui_system_icons: ^1.1.221
   flutter:
     sdk: flutter
